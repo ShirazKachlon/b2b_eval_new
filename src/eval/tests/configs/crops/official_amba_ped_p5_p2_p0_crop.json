@@ -1,0 +1,82 @@
+{
+    "version": 3.41,
+    "data_config": {
+        "det_classes": ["ped", "ped_out_of_distance", "ped_under_score_85", 0, "0"],
+        "gt_classes": ["DUMMY_PERSON", "PEDESTRIAN", "PEDESTRIAN_MCP", "PERSON", "PERSON_MCP", "dummy_person", "pedestrian", "pedestrian_mcp", "person", "person_mcp"],
+        "gt_classes_ignore": ["CHILD", "CHILD_MCP", "child", "child_mcp", "DONTCARE", "GENERAL_IGNORE", "IGNORE", "IGNORE_PEDESTRIAN", "MISC", "dontcare", "general_ignore", "ignore", "ignore_pedestrian", "misc", "RIDER", "RIDER_NLV", "RIDER_CIPV", "BABY_CARRIAGE"],
+        "convert_3d_bboxes_to_2d": false,
+        "gt_occlusion_states_to_ignore": [1],
+        "gt_truncation_states_to_ignore": [],
+        "det_min_score_threshold": 0,
+        "roi_dims_list": [{
+                "gt_box_dims": {
+                    "min_height": 33,
+                    "max_height": -1,
+                    "min_width": -1,
+                    "max_width": -1
+                },
+                "det_box_dims": {
+                    "min_height": 26.4,
+                    "max_height": -1,
+                    "min_width": -1,
+                    "max_width": -1
+                },
+                "roi": {
+                    "left": 1120,
+                    "top": 0,
+                    "width": 1600,
+                    "height": 1920
+                }
+            },
+{
+                "gt_box_dims": {
+                    "min_height": 66,
+                    "max_height": -1,
+                    "min_width": -1,
+                    "max_width": -1
+                },
+                "det_box_dims": {
+                    "min_height": 52.8,
+                    "max_height": -1,
+                    "min_width": -1,
+                    "max_width": -1
+                },
+                "roi": {
+                    "left": 320,
+                    "top": 0,
+                    "width": 3200,
+                    "height": 1920
+                }
+            },
+{
+                "gt_box_dims": {
+                    "min_height": 82,
+                    "max_height": -1,
+                    "min_width": -1,
+                    "max_width": -1
+                },
+                "det_box_dims": {
+                    "min_height": 65.6,
+                    "max_height": -1,
+                    "min_width": -1,
+                    "max_width": -1
+                },
+                "roi": {
+                    "left": 0,
+                    "top": 0,
+                    "width": 3840,
+                    "height": 1920
+                }
+            }],
+        "importance_whitelist": ["MCP", "CIPV", "NIV", 0],
+        "gt_width": -1,
+        "gt_height": -1,
+        "sf_confirmed_states_to_ignore": [0]
+    },
+    "calculation_config": {
+        "match_criteria": 0.4,
+        "match_criteria_ignore": 0.01,
+        "min_separation_iou": 0.7,
+        "test_bbox_accuracy": false
+    }
+}

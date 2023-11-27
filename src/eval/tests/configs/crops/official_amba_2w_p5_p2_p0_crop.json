@@ -1,0 +1,82 @@
+{
+    "version": 3.41,
+    "data_config": {
+        "det_classes": ["2w", 1, "1"],
+        "gt_classes": ["BIKE", "MOTOR", "BIKE_CIPV", "MOTOR_CIPV", "MOTOR_NLV", "BIKE_NLV", "bike", "motor", "bike_cipv", "motor_cipv", "motor_nlv", "bike_nlv", "1"],
+        "gt_classes_ignore": ["GENERAL_IGNORE", "DONTCARE", "IGNORE", "MISC", "IGNORE_BICYCLE", "BIKE_WITHOUT_RIDER", "MOTOR_WITHOUT_RIDER", "TRICYCLE", "KICK_SCOOTER", "BABY_CARRIAGE", "tricycle_nlv", "tricycle_cipv", "kick_scooter_cipv", "kick_scooter_nlv", "TRICYCLE_NLV", "TRICYCLE_CIPV", "KICK_SCOOTER_CIPV", "KICK_SCOOTER_NLV", "general_ignore", "dontcare", "ignore", "misc", "ignore_bicycle", "bike_without_rider", "motor_without_rider", "tricycle", "kick_scooter", "baby_carriage"],
+        "convert_3d_bboxes_to_2d": false,
+        "gt_occlusion_states_to_ignore": [1],
+        "gt_truncation_states_to_ignore": [],
+        "det_min_score_threshold": 0,
+        "roi_dims_list": [{
+                "gt_box_dims": {
+                    "min_height": 18,
+                    "max_height": -1,
+                    "min_width": -1,
+                    "max_width": -1
+                },
+                "det_box_dims": {
+                    "min_height": 14.4,
+                    "max_height": -1,
+                    "min_width": -1,
+                    "max_width": -1
+                },
+                "roi": {
+                    "left": 1120,
+                    "top": 0,
+                    "width": 1600,
+                    "height": 1920
+                }
+            },
+{
+                "gt_box_dims": {
+                    "min_height": 31,
+                    "max_height": -1,
+                    "min_width": -1,
+                    "max_width": -1
+                },
+                "det_box_dims": {
+                    "min_height": 24.8,
+                    "max_height": -1,
+                    "min_width": -1,
+                    "max_width": -1
+                },
+                "roi": {
+                    "left": 320,
+                    "top": 0,
+                    "width": 3200,
+                    "height": 1920
+                }
+            },
+{
+                "gt_box_dims": {
+                    "min_height": 37,
+                    "max_height": -1,
+                    "min_width": -1,
+                    "max_width": -1
+                },
+                "det_box_dims": {
+                    "min_height": 29.6,
+                    "max_height": -1,
+                    "min_width": -1,
+                    "max_width": -1
+                },
+                "roi": {
+                    "left": 0,
+                    "top": 0,
+                    "width": 3840,
+                    "height": 1920
+                }
+            }],
+        "importance_whitelist": ["MCP", "CIPV", "NIV", 0],
+        "gt_width": -1,
+        "gt_height": -1,
+        "sf_confirmed_states_to_ignore": [0]
+    },
+    "calculation_config": {
+        "match_criteria": 0.5,
+        "match_criteria_ignore": 0.01,
+        "min_separation_iou": 0.7,
+        "test_bbox_accuracy": false
+    }
+}
