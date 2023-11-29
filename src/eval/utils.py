@@ -26,9 +26,7 @@ def dump_json(json_filepath, data):
 def save_df_to_tsv(df, output_tsv_filepath):
     df.to_csv(output_tsv_filepath, sep='\t', index=False)
 
+
 def load_tsv_to_df(input_tsv_filepath):
     df = pd.read_csv(input_tsv_filepath, sep='\t')
     return df
-
-def get_user():
-    return getpass.getuser()

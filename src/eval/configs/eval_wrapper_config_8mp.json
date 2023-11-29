@@ -1,0 +1,162 @@
+{
+  "name": "",
+  "author": "",
+  "output_dir": "",
+  "ground_truth_path": "",
+  "det_path": "",
+  "spreadsheet_log": "",
+  "debug": false,
+  "save_results": "base",
+  "images_path": "",
+  "autolabeling_is_gt": false,
+  "multi_frame_detection": false,
+  "corridor_filter": false,
+  "lanes_filter": false,
+  "lanes_filter_arguments": {
+    "cametra_path": "",
+    "imu_path": ""
+  },
+  "summarize_by": {
+    "score": 100,
+    "precision_required": 90
+  },
+  "configs": [
+    {
+      "config_name": "peds",
+      "evaluation_configuration": "src/eval/configs/crops/official_amba_2w_p5_p2_p0_crop.json",
+      "working_point_field_name": "score",
+      "working_point_field_value": 0,
+      "height_bins_enabled": true,
+      "height_bins": [
+        33,
+        37,
+        41,
+        47,
+        55,
+        66,
+        82,
+        110,
+        165,
+        327,
+        1920
+      ],
+      "draw_images_enabled": false,
+      "distances_tool_enabled": false,
+      "distances_per_bin_enabled": false,
+      "distances_tool_arguments": {
+        "scores": "0-0",
+        "google_spreadsheet_path": "",
+        "label_to_invest": [
+          "peds"
+        ],
+        "info_only_enabled": true,
+        "camera_defaults_path": "",
+        "default_classes_map": ""
+      }
+    },
+    {
+      "config_name": "rider",
+      "evaluation_configuration": "src/eval/configs/crops/official_amba_rider_p5_p2_p0_crop.json",
+      "working_point_field_name": "score",
+      "working_point_field_value": 0,
+      "height_bins_enabled": true,
+      "height_bins": [
+        33,
+        37,
+        41,
+        47,
+        55,
+        66,
+        82,
+        110,
+        165,
+        327,
+        1920
+      ],
+      "draw_images_enabled": false,
+      "distances_tool_enabled": false,
+      "distances_per_bin_enabled": false,
+      "distances_tool_arguments": {
+        "scores": "0-0",
+        "google_spreadsheet_path": "",
+        "label_to_invest": [
+          "rider"
+        ],
+        "info_only_enabled": true,
+        "camera_defaults_path": "",
+        "default_classes_map": ""
+      }
+    },
+    {
+      "config_name": "2w",
+      "evaluation_configuration": "src/eval/configs/crops/official_amba_2w_p5_p2_p0_crop.json",
+      "working_point_field_name": "score",
+      "working_point_field_value": 0,
+      "height_bins_enabled": true,
+      "height_bins": [
+        18,
+        20,
+        23,
+        26,
+        31,
+        37,
+        45,
+        61,
+        92,
+        192,
+        1920
+      ],
+      "draw_images_enabled": false,
+      "distances_tool_enabled": false,
+      "distances_per_bin_enabled": false,
+      "distances_tool_arguments": {
+        "scores": "0-0",
+        "google_spreadsheet_path": "",
+        "label_to_invest": [
+          "2w"
+        ],
+        "info_only_enabled": true,
+        "camera_defaults_path": "",
+        "default_classes_map": ""
+      }
+    },
+    {
+      "config_name": "4w",
+      "evaluation_configuration": "src/eval/configs/crops/official_amba_4w_p5_p2_p0_crop.json",
+      "working_point_field_name": "score",
+      "working_point_field_value": 0,
+      "height_bins_enabled": true,
+      "height_bins": [
+        11,
+        14,
+        18,
+        22,
+        27,
+        30,
+        34,
+        39,
+        46,
+        55,
+        68,
+        91,
+        137,
+        273,
+        1920
+      ],
+      "draw_images_enabled": false,
+      "distances_tool_enabled": false,
+      "distances_per_bin_enabled": false,
+      "distances_tool_arguments": {
+        "scores": "0-0",
+        "google_spreadsheet_path": "",
+        "label_to_invest": [
+          "4w"
+        ],
+        "info_only_enabled": true,
+        "camera_defaults_path": "",
+        "default_classes_map": ""
+      }
+    }
+  ],
+  "json": ""
+}
