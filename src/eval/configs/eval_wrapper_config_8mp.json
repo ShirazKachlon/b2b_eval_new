@@ -8,10 +8,10 @@
   "debug": false,
   "save_results": "base",
   "images_path": "",
-  "autolabeling_is_gt": false,
-  "multi_frame_detection": false,
-  "corridor_filter": false,
-  "lanes_filter": false,
+  "is_autolabeling_gt": false,
+  "is_multi_frame_detection": false,
+  "is_corridor_filter": false,
+  "is_lanes_filter": false,
   "lanes_filter_arguments": {
     "cametra_path": "",
     "imu_path": ""
