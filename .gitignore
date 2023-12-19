@@ -1,2 +1,7 @@
 /test.py
 .venv
+.idea/
+.vscode/
+__pycache__/
+tests/
+inputs/
