@@ -12,10 +12,7 @@
   "is_multi_frame_detection": false,
   "is_corridor_filter": false,
   "is_lanes_filter": false,
-  "lanes_filter_arguments": {
-    "cametra_path": "",
-    "imu_path": ""
-  },
+  "cametra_folder_path": "None",
   "summarize_by": {
     "score": 100,
     "precision_required": 90
@@ -23,7 +20,7 @@
   "configs": [
     {
       "config_name": "peds",
-      "evaluation_configuration": "src/eval/configs/crops/official_amba_2w_p5_p2_p0_crop.json",
+      "evaluation_configuration": "src/eval/configs/crops/official_amba_ped_p5_p2_p0_crop.json",
       "working_point_field_name": "score",
       "working_point_field_value": 0,
       "height_bins_enabled": true,
@@ -48,39 +45,6 @@
         "google_spreadsheet_path": "",
         "label_to_invest": [
           "peds"
-        ],
-        "info_only_enabled": true,
-        "camera_defaults_path": "",
-        "default_classes_map": ""
-      }
-    },
-    {
-      "config_name": "rider",
-      "evaluation_configuration": "src/eval/configs/crops/official_amba_rider_p5_p2_p0_crop.json",
-      "working_point_field_name": "score",
-      "working_point_field_value": 0,
-      "height_bins_enabled": true,
-      "height_bins": [
-        33,
-        37,
-        41,
-        47,
-        55,
-        66,
-        82,
-        110,
-        165,
-        327,
-        1920
-      ],
-      "draw_images_enabled": false,
-      "distances_tool_enabled": false,
-      "distances_per_bin_enabled": false,
-      "distances_tool_arguments": {
-        "scores": "0-0",
-        "google_spreadsheet_path": "",
-        "label_to_invest": [
-          "rider"
         ],
         "info_only_enabled": true,
         "camera_defaults_path": "",
