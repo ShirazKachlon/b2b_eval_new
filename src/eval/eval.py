@@ -1,37 +1,57 @@
 import os
+import shutil
 from copy import copy
 from pathlib import Path
 
 from automotive.evaluation.evaluate_multiple_classes import eval_multi_classes
+from automotive.evaluation_v2.run_od_evaluation import run_eval_v2
 
 from src.eval.config_handler import ConfigHandler
-from src.eval.consts import config_template_path, tmp_folder_path, evaluation_gt_columns, evaluation_detection_columns
-from src.eval.data_prepartions import DataPreparations
-from src.eval.utils import load_json, dump_json, cleanup_directory, validate_input, validate_path_input
+from src.eval.consts import config_template_path, tmp_folder_path
+from src.eval.labels import labels_if_autolabeling_gt, labels_if_autolabeling_det
+from src.eval.output_organizer import OutputOrganizer
+from src.eval.parser import Parser
+from src.eval.utils import load_json, dump_json, validate_input, validate_path_input
 
 
 class Evaluation:
     def __init__(self, config_path=None):
-        self.parser = DataPreparations()
         self.config_path = config_path
         self.cur_tmp_folder_path = tmp_folder_path
         self.list_of_summarize_dict = None
+        self.main_output_dir = None
+        self.parser = Parser()
 
     def run_evaluation(self, **kwargs):
-        # bpre_proccess_data(flags -> easy money)
-        if self.config_path is None:
-            self.build_eval_for_running(**kwargs)
-
-        eval_multi_classes(str(self.cur_tmp_folder_path / 'config.json'))
-        cleanup_directory(self.cur_tmp_folder_path / 'config.json')
+        tmp_config_path = self.build_eval_for_running(**kwargs)
+        eval_multi_classes(tmp_config_path)
+        # run_eval_v2(tmp_config_path)
 
     def build_eval_for_running(self, **kwargs):
-        os.makedirs(self.cur_tmp_folder_path, exist_ok=True)
-        cur_config = load_json(config_template_path)
-        cur_config = self.update_config(cur_config, **kwargs)
-        dump_json(self.cur_tmp_folder_path / 'config.json', cur_config)
+        update_needed = False
 
-    def update_config(self, eval_config, **kwargs):
+        if self.config_path is None:
+            cur_config = load_json(config_template_path)
+            cur_config = self.update_args_in_template_config(cur_config, **kwargs)
+            update_needed = True
+        else:
+            cur_config = load_json(self.config_path)
+
+        self.main_output_dir = OutputOrganizer(cur_config['output_dir'])
+        output_input_dir = self.main_output_dir.input_folder()
+        cur_crops_dir = self.main_output_dir.crops_folder()
+        shutil.copytree(os.path.join(Path.cwd(), 'src', 'eval', 'configs', 'crops'), cur_crops_dir)
+
+        if update_needed:
+            cur_config = self.update_crops_in_config(cur_config)
+
+        self.validate_config(cur_config)
+        cur_config = self.parser.parse(cur_config, output_input_dir)
+        self.config_path = os.path.join(output_input_dir, 'config.json')
+        dump_json(self.config_path, cur_config)
+        return str(self.config_path)
+
+    def update_args_in_template_config(self, eval_config, **kwargs):
         cur_config = copy(eval_config)
         for cur_input in ConfigHandler.get_all_inputs():
             if cur_input not in kwargs:
@@ -39,42 +59,33 @@ class Evaluation:
             cur_config[cur_input] = kwargs.get(cur_input)
         cur_config[cur_input] = kwargs.get(cur_input)
 
-        if cur_config['is_autolabeling_gt']:
-            cur_config['ground_truth_path'] = self.parser.remove_columns(evaluation_gt_columns,
-                                                                         cur_config['ground_truth_path'],
-                                                                         '_as_gt.tsv')
-        else:
-            cur_config['det_path'] = self.parser.remove_columns(evaluation_detection_columns, cur_config['det_path'])
-
-        # TODO: make it in a better way
-        if cur_config['is_multi_frame_detection']:
-            cur_config['det_path'] = self.parser.convert_tsv_template(
-                self.parser.transform_multi_frame_bounding_box_from_3d_to_2d, cur_config['det_path'], '_2d_bbox.tsv')
-        if cur_config['is_corridor_filter']:
-            cur_config['ground_truth_path'] = self.parser.convert_tsv_template(
-                self.parser.filter_objects_out_of_corridor, cur_config['ground_truth_path'], '_corridor_filtered.tsv')
-            cur_config['det_path'] = self.parser.convert_tsv_template(self.parser.filter_objects_out_of_corridor,
-                                                                      cur_config['det_path'], '_corridor_filtered.tsv')
-        if cur_config['is_lanes_filter']:
-            cur_config['ground_truth_path'] = self.parser.convert_tsv_template(
-                self.parser.filter_objects_out_by_lane_filter, cur_config['ground_truth_path'], '_lanes_filtered.tsv')
-            cur_config['det_path'] = self.parser.convert_tsv_template(self.parser.filter_objects_out_by_lane_filter,
-                                                                      cur_config['det_path'], '_lanes_filtered.tsv')
-
-        for i, config in enumerate(cur_config['configs']):
-            crop_path = config['evaluation_configuration']
-            cur_config['configs'][i]['evaluation_configuration'] = str(Path.cwd() / crop_path)
-        self.validate_config(cur_config)
-
         return cur_config
+
+    def update_crops_in_config(self, eval_config):
+        eval_labels = self.labels_mapper(eval_config)
+        for i, config in enumerate(eval_config['configs']):
+            crop_path = config['evaluation_configuration']
+            absolute_crop_path = os.path.join(self.main_output_dir.crops_folder(), os.path.basename(crop_path))
+            eval_config['configs'][i]['evaluation_configuration'] = str(absolute_crop_path)
+            cur_class_config = load_json(absolute_crop_path)
+            for cur_update in eval_labels[config['config_name']]:
+                cur_class_config['data_config'][cur_update] = eval_labels[config['config_name']][cur_update]
+            dump_json(absolute_crop_path, cur_class_config)
+        return eval_config
+
+    def labels_mapper(self, config):
+        if config['is_autolabeling_gt']:
+            return labels_if_autolabeling_gt
+        else:
+            return labels_if_autolabeling_det
 
     def validate_config(self, config):
         config_handler = ConfigHandler
         inputs_to_check = config_handler.get_inputs_type()
 
         # Check lane filter inputs
-        if config['is_lanes_filter'] and (config['cametra_path'] is None or config['imu_path'] is None):
-            raise ValueError(f'lanes filter require cametra path and imu path')
+        if config['is_lanes_filter'] and (config['cametra_folder_path'] is None):
+            raise ValueError(f'lanes filter require cametra folser path')
         else:
             inputs_to_check.pop(config_handler.cametra_path, None)
             inputs_to_check.pop(config_handler.imu_path, None)
