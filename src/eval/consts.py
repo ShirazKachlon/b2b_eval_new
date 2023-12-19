@@ -1,6 +1,5 @@
 from pathlib import Path
 
-
 evaluation_gt_columns = ['name', 'x_center', 'y_center', 'width', 'height', 'label', 'd3_separation', 'r_label',
                          'l_label']
 evaluation_detection_columns = evaluation_gt_columns.copy()
