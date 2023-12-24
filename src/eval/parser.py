@@ -1,10 +1,9 @@
 import os
 import shutil
-from pathlib import Path
 
 from src.eval.consts import evaluation_gt_columns, evaluation_detection_columns
-from src.eval.output_organizer import OutputOrganizer
 from src.eval.utils import load_tsv_to_df, save_df_to_tsv
+
 
 class Parser(object):
     def __init__(self):
@@ -15,7 +14,6 @@ class Parser(object):
         self.gt_path = None
         self.dir_for_save = None
         self.origin_file_dir = None
-
 
     def set_config(self, config, dir_for_save):
         self.dir_for_save = dir_for_save
@@ -46,6 +44,7 @@ class Parser(object):
         self.save()
 
         return self.config
+
     def parse_auto_labeling(self):
         if self.config['is_autolabeling_gt']:
             self.gt_path = self.gt_path.replace('.tsv', '_as_gt.tsv')
@@ -55,7 +54,6 @@ class Parser(object):
             self.det_path = self.det_path.replace('.tsv', '_parsed.tsv')
             self.det_df = self.det_df[evaluation_detection_columns]
         return self.update_config()
-
 
     def parse_multi_frame(self):
         if not self.config['is_multi_frame_detection']:
@@ -80,7 +78,6 @@ class Parser(object):
         # self.det_df = corridor_filter(self.det_df)
         self.det_path = self.det_path.replace('.tsv', '_with_corridor_filter.tsv')
         self.update_config()
-
 
     def save(self):
         copy_gt_path = os.path.join(self.dir_for_save, os.path.basename(self.gt_path))

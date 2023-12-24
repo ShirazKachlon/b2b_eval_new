@@ -16,7 +16,8 @@ class ConfigHandler:
     @classmethod
     def get_all_inputs(cls):
         return [cls.output_dir, cls.ground_truth_path, cls.det_path, cls.save_results,
-                cls.is_autolabeling_gt, cls.is_multi_frame_detection, cls.is_corridor_filter, cls.is_lanes_filter, cls.cametra_path, cls.imu_path]
+                cls.is_autolabeling_gt, cls.is_multi_frame_detection, cls.is_corridor_filter, cls.is_lanes_filter,
+                cls.cametra_path, cls.imu_path]
 
     @classmethod
     def get_inputs_type(cls):

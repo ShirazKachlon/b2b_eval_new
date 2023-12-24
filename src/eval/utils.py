@@ -39,6 +39,7 @@ def cleanup_directory(path):
     else:
         path.unlink()
 
+
 def validate_input(parm_name, parm, parm_type):
     if not isinstance(parm, parm_type):
         raise ValueError(f'{parm_name} must be {parm_type}')

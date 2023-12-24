@@ -1,6 +1,7 @@
+import os
 import shutil
 from pathlib import Path
-import os
+
 
 class OutputOrganizer:
     def __init__(self, output_path):
