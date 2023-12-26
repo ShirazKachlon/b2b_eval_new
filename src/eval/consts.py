@@ -1,23 +1,46 @@
 from pathlib import Path
 
-
-class Inputs:
-    output_dir = 'output_dir'
-    ground_truth_path = 'ground_truth_path'
-    det_path = 'det_path'
-    save_results = 'save_results'
-    images_path = 'images_path'
-    autolabeling_is_gt = 'autolabeling_is_gt'
-    multi_frame_detection = 'multi_frame_detection'
-
-    @classmethod
-    def get_all_inputs(cls):
-        return [cls.output_dir, cls.ground_truth_path, cls.det_path, cls.save_results, cls.images_path,
-                cls.autolabeling_is_gt, cls.multi_frame_detection]
-
 evaluation_gt_columns = ['name', 'x_center', 'y_center', 'width', 'height', 'label', 'd3_separation', 'r_label',
-                         'l_label', 'score']
-evaluation_detection_columns = ['name', 'x_center', 'y_center', 'width', 'height', 'label', 'd3_separation', 'score']
+                         'l_label']
+evaluation_detection_columns = evaluation_gt_columns.copy()
+evaluation_detection_columns.append('score')
 
 config_template_path = Path.cwd() / 'src' / 'eval' / 'configs' / 'eval_wrapper_config_8mp.json'
-tmp_config_path =Path.cwd() / 'src' / 'eval' / 'configs' / 'tmp_config.json'
+tmp_folder_path = Path.cwd() / 'tmp'
+
+bins_to_range = {
+    '327-1920': '0-10',
+    '165-327': '10-20',
+    '110-165': '20-30',
+    '82-110': '30-40',
+    '66-82': '40-50',
+    '55-66': '50-60',
+    '47-55': '60-70',
+    '41-47': '70-80',
+    '37-41': '80-90',
+    '33-37': '90-100',
+    '192-1920': '0-10',
+    '92-192': '10-20',
+    '61-92': '20-30',
+    '45-61': '30-40',
+    '37-45': '40-50',
+    '31-37': '50-60',
+    '26-31': '60-70',
+    '23-26': '70-80',
+    '20-23': '80-90',
+    '18-20': '90-100',
+    '273-1920': '0-10',
+    '137-273': '10-20',
+    '91-137': '20-30',
+    '68-91': '30-40',
+    '55-68': '40-50',
+    '46-55': '50-60',
+    '39-46': '60-70',
+    '34-39': '70-80',
+    '30-34': '80-90',
+    '27-30': '90-100',
+    '22-27': '100-125',
+    '18-22': '125-150',
+    '14-18': '150-200',
+    '11-14': '200-250'
+}

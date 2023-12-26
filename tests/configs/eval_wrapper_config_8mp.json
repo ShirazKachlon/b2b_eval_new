@@ -2,11 +2,12 @@
   "name": "ab_car_validation_germany",
   "author": "",
   "output_dir": "/home/shiraz/eval_test",
-  "ground_truth_path": "/home/shiraz/PycharmProjects/b2b_eval_new/src/eval/tests/input_files/gt_3_images.tsv",
-  "det_path": "/home/shiraz/PycharmProjects/b2b_eval_new/src/eval/tests/input_files/b2b_det_3_images.tsv",
+  "ground_truth_path": "/home/shiraz/PycharmProjects/b2b_eval_new/tests/input_files/gt_3_images.tsv",
+  "det_path": "/home/shiraz/PycharmProjects/b2b_eval_new/tests/input_files/b2b_det_3_images.tsv",
   "spreadsheet_log": "",
   "debug": false,
   "save_results": "base",
+  "evaluate_single_score": 0,
   "images_path": "",
   "autolabeling_is_gt": false,
   "multi_frame_detection": false,
@@ -22,7 +23,7 @@
   "configs": [
     {
       "config_name": "peds",
-      "evaluation_configuration": "/home/shiraz/PycharmProjects/b2b_eval_new/src/eval/tests/configs/crops/official_amba_2w_p5_p2_p0_crop.json",
+      "evaluation_configuration": "/home/shiraz/PycharmProjects/b2b_eval_new/tests/configs/crops/official_amba_2w_p5_p2_p0_crop.json",
       "working_point_field_name": "score",
       "working_point_field_value": 0,
       "height_bins_enabled": true,
@@ -55,7 +56,7 @@
     },
     {
       "config_name": "rider",
-      "evaluation_configuration": "/home/shiraz/PycharmProjects/b2b_eval_new/src/eval/tests/configs/crops/official_amba_rider_p5_p2_p0_crop.json",
+      "evaluation_configuration": "/home/shiraz/PycharmProjects/b2b_eval_new/tests/configs/crops/official_amba_rider_p5_p2_p0_crop.json",
       "working_point_field_name": "score",
       "working_point_field_value": 0,
       "height_bins_enabled": true,
@@ -88,7 +89,7 @@
     },
     {
       "config_name": "2w",
-      "evaluation_configuration": "/home/shiraz/PycharmProjects/b2b_eval_new/src/eval/tests/configs/crops/official_amba_2w_p5_p2_p0_crop.json",
+      "evaluation_configuration": "/home/shiraz/PycharmProjects/b2b_eval_new/tests/configs/crops/official_amba_2w_p5_p2_p0_crop.json",
       "working_point_field_name": "score",
       "working_point_field_value": 0,
       "height_bins_enabled": true,
@@ -121,7 +122,7 @@
     },
     {
       "config_name": "4w",
-      "evaluation_configuration": "/home/shiraz/PycharmProjects/b2b_eval_new/src/eval/tests/configs/crops/official_amba_4w_p5_p2_p0_crop.json",
+      "evaluation_configuration": "/home/shiraz/PycharmProjects/b2b_eval_new/tests/configs/crops/official_amba_4w_p5_p2_p0_crop.json",
       "working_point_field_name": "score",
       "working_point_field_value": 0,
       "height_bins_enabled": true,
