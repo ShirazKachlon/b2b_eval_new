@@ -1,4 +1,4 @@
-name	x_center	y_center	width	height	label	is_occluded	is_truncated	d3_separation	custom_2	back_wheel	l_label	is_not_in_lane	is_rider_on_2_wheels	is_occluded_over_80	front_wheel	r_label
+name	x_center	y_center	width	height	label	is_occluded_gt	is_truncated_gt	d3_separation	custom_2	back_wheel	l_label	is_not_in_lane	is_rider_on_2_wheels	is_occluded_over_80	front_wheel	r_label
 1662979321795878.png	2171.12263171744	970.353635667425	156.774696630944	184.322565597049	TRAILER	0	0	2117.5001078968	1	(0, 0)	SIDE	0	0	0	(0, 0)	BACK
 1662979321795878.png	1880.39075477171	970	83.21849045658	99	VAN_CIPV	0	0	0	1	(0, 0)	BACK	0	0	0	(0, 0)	BACK
 1662979321795878.png	2070	994	64	113.5	CAR_NLV	1	0	2075.68934732382	1	(0, 0)	SIDE	0	0	0	(0, 0)	BACK

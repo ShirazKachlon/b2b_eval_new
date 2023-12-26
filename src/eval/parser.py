@@ -40,7 +40,6 @@ class Parser(object):
         self.parse_auto_labeling()
         self.parse_multi_frame()
         self.parse_lanes_filter()
-        self.parse_corridor_filter()
         self.save()
 
         return self.config
@@ -69,14 +68,6 @@ class Parser(object):
 
         # self.det_df = lanes_filter(self.det_df, self.config['cametra_path'], self.config['imu_path'])
         self.det_path = self.det_path.replace('.tsv', '_with_lanes_filter.tsv')
-        self.update_config()
-
-    def parse_corridor_filter(self):
-        if not self.config['is_corridor_filter']:
-            return
-
-        # self.det_df = corridor_filter(self.det_df)
-        self.det_path = self.det_path.replace('.tsv', '_with_corridor_filter.tsv')
         self.update_config()
 
     def save(self):

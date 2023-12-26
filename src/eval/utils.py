@@ -31,6 +31,11 @@ def load_tsv_to_df(input_tsv_filepath):
     return df
 
 
+def load_parquet_to_df(input_parquet_filepath):
+    df = pd.read_parquet(input_parquet_filepath)
+    return df
+
+
 def cleanup_directory(path):
     if path.is_dir():
         for item in path.iterdir():
@@ -41,7 +46,7 @@ def cleanup_directory(path):
 
 
 def validate_input(parm_name, parm, parm_type):
-    if not isinstance(parm, parm_type):
+    if not isinstance(parm, parm_type) and parm is not None:
         raise ValueError(f'{parm_name} must be {parm_type}')
 
 

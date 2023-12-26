@@ -1,6 +1,7 @@
 from pathlib import Path
 
 
+# TODO: maybe move to Pydantic
 class ConfigHandler:
     output_dir = 'output_dir'
     ground_truth_path = 'ground_truth_path'
@@ -8,16 +9,16 @@ class ConfigHandler:
     save_results = 'save_results'
     is_autolabeling_gt = 'is_autolabeling_gt'
     is_multi_frame_detection = 'is_multi_frame_detection'
-    is_corridor_filter = 'is_corridor_filter'
     is_lanes_filter = 'is_lanes_filter'
     cametra_path = 'cametra_path'
     imu_path = 'imu_path'
+    evaluate_single_score = 'evaluate_single_score'
 
     @classmethod
     def get_all_inputs(cls):
         return [cls.output_dir, cls.ground_truth_path, cls.det_path, cls.save_results,
-                cls.is_autolabeling_gt, cls.is_multi_frame_detection, cls.is_corridor_filter, cls.is_lanes_filter,
-                cls.cametra_path, cls.imu_path]
+                cls.is_autolabeling_gt, cls.is_multi_frame_detection, cls.is_lanes_filter,
+                cls.cametra_path, cls.imu_path, cls.evaluate_single_score]
 
     @classmethod
     def get_inputs_type(cls):
@@ -28,10 +29,10 @@ class ConfigHandler:
             cls.save_results: str,
             cls.is_autolabeling_gt: bool,
             cls.is_multi_frame_detection: bool,
-            cls.is_corridor_filter: bool,
             cls.is_lanes_filter: bool,
             cls.cametra_path: Path,
-            cls.imu_path: Path
+            cls.imu_path: Path,
+            cls.evaluate_single_score: int
         }
 
     @classmethod

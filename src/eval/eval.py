@@ -3,14 +3,13 @@ import shutil
 from copy import copy
 from pathlib import Path
 
-from automotive.evaluation.evaluate_multiple_classes import eval_multi_classes
 from automotive.evaluation_v2.run_od_evaluation import run_eval_v2
-
 from src.eval.config_handler import ConfigHandler
 from src.eval.consts import config_template_path, tmp_folder_path
 from src.eval.labels import labels_if_autolabeling_gt, labels_if_autolabeling_det
 from src.eval.output_organizer import OutputOrganizer
 from src.eval.parser import Parser
+from src.eval.post_process import PostProcess
 from src.eval.utils import load_json, dump_json, validate_input, validate_path_input
 
 
@@ -24,8 +23,9 @@ class Evaluation:
 
     def run_evaluation(self, **kwargs):
         tmp_config_path = self.build_eval_for_running(**kwargs)
-        eval_multi_classes(tmp_config_path)
-        # run_eval_v2(tmp_config_path)
+        # eval_multi_classes(tmp_config_path)
+        run_eval_v2(tmp_config_path)
+        PostProcess(self.main_output_dir.output_folder(), self.main_output_dir.summary_folder()).run()
 
     def build_eval_for_running(self, **kwargs):
         update_needed = False
@@ -38,6 +38,7 @@ class Evaluation:
             cur_config = load_json(self.config_path)
 
         self.main_output_dir = OutputOrganizer(cur_config['output_dir'])
+        cur_config['output_dir'] = self.main_output_dir.output_folder()
         output_input_dir = self.main_output_dir.input_folder()
         cur_crops_dir = self.main_output_dir.crops_folder()
         shutil.copytree(os.path.join(Path.cwd(), 'src', 'eval', 'configs', 'crops'), cur_crops_dir)
@@ -51,7 +52,8 @@ class Evaluation:
         dump_json(self.config_path, cur_config)
         return str(self.config_path)
 
-    def update_args_in_template_config(self, eval_config, **kwargs):
+    @staticmethod
+    def update_args_in_template_config(eval_config, **kwargs):
         cur_config = copy(eval_config)
         for cur_input in ConfigHandler.get_all_inputs():
             if cur_input not in kwargs:
@@ -62,7 +64,7 @@ class Evaluation:
         return cur_config
 
     def update_crops_in_config(self, eval_config):
-        eval_labels = self.labels_mapper(eval_config)
+        eval_labels = labels_if_autolabeling_gt if eval_config['is_autolabeling_gt'] else labels_if_autolabeling_det
         for i, config in enumerate(eval_config['configs']):
             crop_path = config['evaluation_configuration']
             absolute_crop_path = os.path.join(self.main_output_dir.crops_folder(), os.path.basename(crop_path))
@@ -73,13 +75,8 @@ class Evaluation:
             dump_json(absolute_crop_path, cur_class_config)
         return eval_config
 
-    def labels_mapper(self, config):
-        if config['is_autolabeling_gt']:
-            return labels_if_autolabeling_gt
-        else:
-            return labels_if_autolabeling_det
-
-    def validate_config(self, config):
+    @staticmethod
+    def validate_config(config):
         config_handler = ConfigHandler
         inputs_to_check = config_handler.get_inputs_type()
 

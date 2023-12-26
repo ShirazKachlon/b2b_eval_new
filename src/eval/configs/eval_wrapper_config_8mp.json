@@ -1,22 +1,18 @@
 {
   "name": "",
   "author": "",
-  "output_dir": "",
-  "ground_truth_path": "",
-  "det_path": "",
+  "output_dir": "/home/shiraz/test/test_json",
+  "ground_truth_path": "/home/shiraz/PycharmProjects/b2b_eval_new/tests/input_files/gt_3_images.tsv",
+  "det_path": "/home/shiraz/PycharmProjects/b2b_eval_new/tests/input_files/b2b_det_3_images.tsv",
   "spreadsheet_log": "",
   "debug": false,
-  "save_results": "base",
+  "save_results": "base_and_breakdown",
+  "evaluate_single_score": 0,
   "images_path": "",
   "is_autolabeling_gt": false,
-  "is_multi_frame_detection": false,
-  "is_corridor_filter": false,
+  "is_multi_frame_detection": true,
   "is_lanes_filter": false,
   "cametra_folder_path": "None",
-  "summarize_by": {
-    "score": 100,
-    "precision_required": 90
-  },
   "configs": [
     {
       "config_name": "peds",
