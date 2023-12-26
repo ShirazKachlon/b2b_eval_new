@@ -57,7 +57,8 @@ class Parser(object):
     def parse_multi_frame(self):
         if not self.config['is_multi_frame_detection']:
             return
-
+        # TODO: Refactor 3rd to 2d
+        # TODO: occluded MF correction
         # self.det_df = convert_3d_2d(self.det_df)
         self.det_path = self.det_path.replace('.tsv', '_with_truncated_2d_boxes.tsv')
         self.update_config()
@@ -65,7 +66,7 @@ class Parser(object):
     def parse_lanes_filter(self):
         if not self.config['is_lanes_filter']:
             return
-
+        # TODO: Add logic for lanes filter
         # self.det_df = lanes_filter(self.det_df, self.config['cametra_path'], self.config['imu_path'])
         self.det_path = self.det_path.replace('.tsv', '_with_lanes_filter.tsv')
         self.update_config()

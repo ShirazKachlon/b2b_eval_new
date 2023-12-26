@@ -1,9 +1,9 @@
 {
   "name": "",
   "author": "",
-  "output_dir": "/home/shiraz/test/test_json",
-  "ground_truth_path": "/home/shiraz/PycharmProjects/b2b_eval_new/tests/input_files/gt_3_images.tsv",
-  "det_path": "/home/shiraz/PycharmProjects/b2b_eval_new/tests/input_files/b2b_det_3_images.tsv",
+  "output_dir": "",
+  "ground_truth_path": "",
+  "det_path": "",
   "spreadsheet_log": "",
   "debug": false,
   "save_results": "base_and_breakdown",
