@@ -42,6 +42,9 @@ class Evaluation:
         cur_config['output_dir'] = self.main_output_dir.output_folder()
         output_input_dir = self.main_output_dir.input_folder()
         cur_crops_dir = self.main_output_dir.crops_folder()
+        if os.path.exists(cur_crops_dir):
+            # If it exists, remove it before copying
+            shutil.rmtree(cur_crops_dir)
         shutil.copytree(os.path.join(Path.cwd(), 'src', 'eval', 'configs', 'crops'), cur_crops_dir)
 
         if update_needed:
