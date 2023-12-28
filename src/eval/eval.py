@@ -24,8 +24,11 @@ class Evaluation:
 
     def run_evaluation(self, **kwargs):
         tmp_config_path = self.build_eval_for_running(**kwargs)
-        # eval_multi_classes(tmp_config_path)
-        run_eval_v2(tmp_config_path)
+        eval_ver = self.evaluation_version(tmp_config_path)
+        if eval_ver == 2:
+            run_eval_v2(tmp_config_path)
+        else:
+            eval_multi_classes(tmp_config_path)
         PostProcess(self.main_output_dir.output_folder(), self.main_output_dir.summary_folder()).run()
 
     def build_eval_for_running(self, **kwargs):
@@ -97,3 +100,11 @@ class Evaluation:
                 validate_path_input(input_parm, config[input_parm])
             else:
                 validate_input(input_parm, config[input_parm], config_handler.get_inputs_type()[input_parm])
+
+    @staticmethod
+    def evaluation_version(config_path):
+        config = load_json(config_path)
+        if 'eval_version' in config.keys():
+            return config['eval_version']
+        else:
+            return -1

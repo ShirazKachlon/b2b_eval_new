@@ -48,10 +48,12 @@ class Parser(object):
     def parse_auto_labeling(self):
         if self.config['is_autolabeling_gt']:
             self.gt_path = self.gt_path.replace('.tsv', '_as_gt.tsv')
+            self.gt_path = os.path.join(self.dir_for_save, os.path.basename(self.gt_path))
             self.gt_df = self.gt_df[evaluation_gt_columns]
-
+            self.gt_df = self.update_columns_for_eval_v2(self.gt_df)
         else:
             self.det_path = self.det_path.replace('.tsv', '_parsed.tsv')
+            self.det_path = os.path.join(self.dir_for_save, os.path.basename(self.det_path))
             self.det_df = self.det_df[evaluation_detection_columns]
         return self.update_config()
 
@@ -61,6 +63,7 @@ class Parser(object):
         # TODO: occluded MF correction
         self.det_df = correct_2d_by_3d(self.det_df)
         self.det_path = self.det_path.replace('.tsv', '_with_truncated_2d_boxes.tsv')
+        self.det_path = os.path.join(self.dir_for_save,os.path.basename(self.det_path))
         self.update_config()
 
     def parse_lanes_filter(self):
@@ -70,6 +73,11 @@ class Parser(object):
         # self.det_df = lanes_filter(self.det_df, self.config['cametra_path'], self.config['imu_path'])
         self.det_path = self.det_path.replace('.tsv', '_with_lanes_filter.tsv')
         self.update_config()
+
+    def update_columns_for_eval_v2(self, df):
+        columns = {'is_occluded': 'is_occluded_gt', 'is_truncated':'is_truncated_gt'}
+        df.rename(columns=columns, inplace=True)
+        return df
 
     def save(self):
         copy_gt_path = os.path.join(self.dir_for_save, os.path.basename(self.gt_path))
