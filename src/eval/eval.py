@@ -3,6 +3,7 @@ import shutil
 from copy import copy
 from pathlib import Path
 
+from automotive.evaluation.evaluate_multiple_classes import eval_multi_classes
 from automotive.evaluation_v2.run_od_evaluation import run_eval_v2
 from src.eval.config_handler import ConfigHandler
 from src.eval.consts import config_template_path, tmp_folder_path
