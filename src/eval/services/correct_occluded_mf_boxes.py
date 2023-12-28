@@ -60,10 +60,7 @@ def change_mf_boxes_to_sf_boxes(mf_df, sf_df):
                            & (~mf_df['sf_x_center'].isna())]
     mf_df.loc[occluded_mf_df.index, ['x_center', 'y_center', 'width', 'height']] = occluded_mf_df[
         ['sf_x_center', 'sf_y_center', 'sf_width', 'sf_height']].to_numpy()
-    # output_dir = os.path.dirname(mf_path)
-    # file_path = os.path.basename(mf_path).split('_with_truncated_2d_boxes.tsv')[0] + '_mf_box_correction.tsv'
-    # path = os.path.join(output_dir, file_path)
-    # mf_df.to_csv(path, sep='\t', index=False)
+    mf_df = mf_df.drop(['sf_x_center', 'sf_y_center', 'sf_width', 'sf_height'], axis=1)
     return mf_df
 
 

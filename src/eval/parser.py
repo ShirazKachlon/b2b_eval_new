@@ -63,10 +63,10 @@ class Parser(object):
     def parse_multi_frame(self):
         if not self.config['is_multi_frame_detection']:
             return
-
+        # TODO: debug fa increase after mf corrections
         self.det_df = correct_2d_by_3d(self.det_df)
-        # sf_df = pd.read_csv(self.config['sf_det_path'], sep='\t')
-        # self.det_df = change_mf_boxes_to_sf_boxes(self.det_df, sf_df)
+        sf_df = pd.read_csv(self.config['sf_det_path'], sep='\t')
+        self.det_df = change_mf_boxes_to_sf_boxes(self.det_df, sf_df)
         self.det_path = self.det_path.replace('.tsv', '_parsed.tsv')
         self.det_path = os.path.join(self.dir_for_save,os.path.basename(self.det_path))
         self.update_config()
