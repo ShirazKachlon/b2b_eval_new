@@ -3,6 +3,7 @@ import shutil
 
 from src.eval.consts import evaluation_gt_columns, evaluation_detection_columns
 from src.eval.utils import load_tsv_to_df, save_df_to_tsv
+from src.eval.services.correct_2d_by_3d import correct_2d_by_3d
 
 
 class Parser(object):
@@ -57,9 +58,8 @@ class Parser(object):
     def parse_multi_frame(self):
         if not self.config['is_multi_frame_detection']:
             return
-        # TODO: Refactor 3rd to 2d
         # TODO: occluded MF correction
-        # self.det_df = convert_3d_2d(self.det_df)
+        self.det_df = correct_2d_by_3d(self.det_df)
         self.det_path = self.det_path.replace('.tsv', '_with_truncated_2d_boxes.tsv')
         self.update_config()
 
