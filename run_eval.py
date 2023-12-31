@@ -32,6 +32,8 @@ def get_parser():
     manual_parser.add_argument('--imu_path', type=str, required=False, help='Path to IMU file')
     manual_parser.add_argument('--override', default=False, action='store_true',
                                help='whether to overrider old results if exists')
+    manual_parser.add_argument('--sf_det_path', type=str, required=False, default='',
+                               help='SF detection path for correction of occluded MF objects')
 
     return parser
 

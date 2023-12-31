@@ -24,8 +24,11 @@ class Evaluation:
 
     def run_evaluation(self, **kwargs):
         tmp_config_path = self.build_eval_for_running(**kwargs)
-        # eval_multi_classes(tmp_config_path)
+        "Eval version 2"
         run_eval_v2(tmp_config_path)
+        "Eval version 1"
+        #eval_multi_classes(tmp_config_path)
+        # TODO: bug fix summary with eval v1
         PostProcess(self.main_output_dir.output_folder(), self.main_output_dir.summary_folder()).run()
 
     def build_eval_for_running(self, **kwargs):
@@ -42,6 +45,10 @@ class Evaluation:
         cur_config['output_dir'] = self.main_output_dir.output_folder()
         output_input_dir = self.main_output_dir.input_folder()
         cur_crops_dir = self.main_output_dir.crops_folder()
+        if os.path.exists(cur_crops_dir):
+            # If it exists, remove it before copying
+            shutil.rmtree(cur_crops_dir)
+        # TODO: fix bug of copying wrong crops from repo instead of the config
         shutil.copytree(os.path.join(Path.cwd(), 'src', 'eval', 'configs', 'crops'), cur_crops_dir)
 
         if update_needed:
@@ -94,3 +101,11 @@ class Evaluation:
                 validate_path_input(input_parm, config[input_parm])
             else:
                 validate_input(input_parm, config[input_parm], config_handler.get_inputs_type()[input_parm])
+
+    @staticmethod
+    def evaluation_version(config_path):
+        config = load_json(config_path)
+        if 'eval_version' in config.keys():
+            return config['eval_version']
+        else:
+            return -1
