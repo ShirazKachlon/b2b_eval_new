@@ -25,9 +25,9 @@ class Evaluation:
     def run_evaluation(self, **kwargs):
         tmp_config_path = self.build_eval_for_running(**kwargs)
         "Eval version 2"
-        #run_eval_v2(tmp_config_path)
+        run_eval_v2(tmp_config_path)
         "Eval version 1"
-        eval_multi_classes(tmp_config_path)
+        #eval_multi_classes(tmp_config_path)
         # TODO: bug fix summary with eval v1
         PostProcess(self.main_output_dir.output_folder(), self.main_output_dir.summary_folder()).run()
 
@@ -48,6 +48,7 @@ class Evaluation:
         if os.path.exists(cur_crops_dir):
             # If it exists, remove it before copying
             shutil.rmtree(cur_crops_dir)
+        # TODO: fix bug of copying wrong crops from repo instead of the config
         shutil.copytree(os.path.join(Path.cwd(), 'src', 'eval', 'configs', 'crops'), cur_crops_dir)
 
         if update_needed:
