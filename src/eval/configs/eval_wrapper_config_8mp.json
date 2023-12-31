@@ -11,6 +11,7 @@
   "images_path": "",
   "is_autolabeling_gt": false,
   "is_multi_frame_detection": true,
+  "sf_det_path": "",
   "is_lanes_filter": false,
   "cametra_folder_path": "None",
   "configs": [
