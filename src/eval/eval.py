@@ -82,8 +82,8 @@ class Evaluation:
         inputs_to_check = config_handler.get_inputs_type()
 
         # Check lane filter inputs
-        if config['is_lanes_filter'] and (config['cametra_folder_path'] is None):
-            raise ValueError(f'lanes filter require cametra folser path')
+        if config['is_lanes_filter'] and (config['cametra_path'] is None):
+            raise ValueError(f'lanes filter require cametra folder path')
         else:
             inputs_to_check.pop(config_handler.cametra_path, None)
             inputs_to_check.pop(config_handler.imu_path, None)

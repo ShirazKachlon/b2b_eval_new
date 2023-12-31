@@ -1,4 +1,5 @@
 import argparse
+import os
 
 from src.eval.eval import Evaluation
 
@@ -13,6 +14,7 @@ def get_parser():
 
     # Parser for using template json by adding manually inputs
     manual_parser = subparsers.add_parser('inputs')
+    manual_parser.add_argument('--eval_version', type=int, required=False, default=2, help='evaluation version')
     manual_parser.add_argument('--output_dir', type=str, required=True, help='evaluation output directory')
     manual_parser.add_argument('--ground_truth_path', type=str, help='Path to ground truth file')
     manual_parser.add_argument('--det_path', type=str, help='Path to detection file')
@@ -28,6 +30,8 @@ def get_parser():
                                help='flag to filter objects according to lanes road boundary estimation')
     manual_parser.add_argument('--cametra_path', type=str, required=False, help='Path to cametra detection file')
     manual_parser.add_argument('--imu_path', type=str, required=False, help='Path to IMU file')
+    manual_parser.add_argument('--override', default=False, action='store_true',
+                               help='whether to overrider old results if exists')
 
     return parser
 
@@ -36,6 +40,12 @@ def entry_point():
     parser = get_parser()
     args = parser.parse_args()
     args = vars(args)
+
+    if args['override'] and os.path.exists(args['output_dir']):
+        import shutil
+        print(f"Overriding old results in {args['output_dir']}")
+        shutil.rmtree(args['output_dir'])
+
     cur_eval = Evaluation(config_path=args.get('config_json_path'))
     cur_eval.run_evaluation(**args)
 

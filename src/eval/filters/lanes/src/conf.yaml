@@ -1,0 +1,6 @@
+distance_from_road_boundary_threshold: 0
+distance_from_road_boundary_margin: [100, 3500]
+inside_road_boundary_ratio_threshold: 0.7
+distance_from_horizon_threshold: 0
+road_boundary_excess_limit_top: 100
+road_boundary_excess_limit_bottom: 100

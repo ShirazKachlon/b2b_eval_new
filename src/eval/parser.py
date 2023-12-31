@@ -1,8 +1,11 @@
 import os
 import shutil
+from pathlib import Path
+import json
 
 from src.eval.consts import evaluation_gt_columns, evaluation_detection_columns
 from src.eval.utils import load_tsv_to_df, save_df_to_tsv
+from src.eval.filters.lanes.src.filter import apply_lanes_filter
 
 
 class Parser(object):
@@ -47,12 +50,23 @@ class Parser(object):
     def parse_auto_labeling(self):
         if self.config['is_autolabeling_gt']:
             self.gt_path = self.gt_path.replace('.tsv', '_as_gt.tsv')
+            self.gt_path = os.path.join(self.dir_for_save, os.path.basename(self.gt_path))
             self.gt_df = self.gt_df[evaluation_gt_columns]
 
+            self.gt_df = self.update_gt_columns_for_eval_v2(self.gt_df)
         else:
             self.det_path = self.det_path.replace('.tsv', '_parsed.tsv')
+            self.det_path = os.path.join(self.dir_for_save, os.path.basename(self.det_path))
             self.det_df = self.det_df[evaluation_detection_columns]
         return self.update_config()
+
+    def update_gt_columns_for_eval_v2(self, df):
+        # FIXME
+        # if self.config['eval_version'] == 2:
+        if True:
+            columns = {'is_occluded': 'is_occluded_gt', 'is_truncated': 'is_truncated_gt'}
+            df.rename(columns=columns, inplace=True)
+        return df
 
     def parse_multi_frame(self):
         if not self.config['is_multi_frame_detection']:
@@ -64,12 +78,26 @@ class Parser(object):
         self.update_config()
 
     def parse_lanes_filter(self):
-        if not self.config['is_lanes_filter']:
+
+        cametra_dir = self.config['cametra_path']
+
+        if not self.config['is_lanes_filter'] or not cametra_dir:
             return
-        # TODO: Add logic for lanes filter
-        # self.det_df = lanes_filter(self.det_df, self.config['cametra_path'], self.config['imu_path'])
-        self.det_path = self.det_path.replace('.tsv', '_with_lanes_filter.tsv')
-        self.update_config()
+
+        # Apply lanes filter
+
+        self.det_df, self.gt_df, lanes_dict = apply_lanes_filter(gt_df=self.gt_df,
+                                                                 det_df=self.det_df,
+                                                                 cametra_data_path=Path(cametra_dir),
+                                                                 eval_config=self.config)
+
+        with open(Path(self.gt_path).with_name('lanes.json'), 'w') as f:
+            json.dump(lanes_dict, f)
+
+        # # TODO: Add logic for lanes filter
+        # # self.det_df = lanes_filter(self.det_df, self.config['cametra_path'], self.config['imu_path'])
+        # self.det_path = self.det_path.replace('.tsv', '_with_lanes_filter.tsv')
+        # self.update_config()
 
     def save(self):
         copy_gt_path = os.path.join(self.dir_for_save, os.path.basename(self.gt_path))

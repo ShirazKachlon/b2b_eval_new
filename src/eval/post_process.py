@@ -28,10 +28,12 @@ class PostProcess:
         return self.final_results
 
     def merge_results(self):
+        sub_dfs = []
         for file in self.final_results:
             cur_df = load_parquet_to_df(self.final_results[file])
             cur_df.insert(0, 'class', file)
-            self.df_summary_table = self.df_summary_table.append(cur_df)
+            sub_dfs.append(cur_df)
+        self.df_summary_table = pd.concat(sub_dfs)
         return self.df_summary_table
 
     def refactoring_table(self):

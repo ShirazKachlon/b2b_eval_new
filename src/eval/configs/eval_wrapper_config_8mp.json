@@ -11,8 +11,9 @@
   "images_path": "",
   "is_autolabeling_gt": false,
   "is_multi_frame_detection": true,
+  "sf_det_path": "",
   "is_lanes_filter": false,
-  "cametra_folder_path": "None",
+  "cametra_path": "None",
   "configs": [
     {
       "config_name": "peds",
@@ -20,28 +21,14 @@
       "working_point_field_name": "score",
       "working_point_field_value": 0,
       "height_bins_enabled": true,
-      "height_bins": [
-        33,
-        37,
-        41,
-        47,
-        55,
-        66,
-        82,
-        110,
-        165,
-        327,
-        1920
-      ],
+      "height_bins": [33, 37, 41, 47, 55, 66, 82, 110, 165, 327, 1920],
       "draw_images_enabled": false,
       "distances_tool_enabled": false,
       "distances_per_bin_enabled": false,
       "distances_tool_arguments": {
         "scores": "0-0",
         "google_spreadsheet_path": "",
-        "label_to_invest": [
-          "peds"
-        ],
+        "label_to_invest": ["peds"],
         "info_only_enabled": true,
         "camera_defaults_path": "",
         "default_classes_map": ""
@@ -53,28 +40,14 @@
       "working_point_field_name": "score",
       "working_point_field_value": 0,
       "height_bins_enabled": true,
-      "height_bins": [
-        18,
-        20,
-        23,
-        26,
-        31,
-        37,
-        45,
-        61,
-        92,
-        192,
-        1920
-      ],
+      "height_bins": [18, 20, 23, 26, 31, 37, 45, 61, 92, 192, 1920],
       "draw_images_enabled": false,
       "distances_tool_enabled": false,
       "distances_per_bin_enabled": false,
       "distances_tool_arguments": {
         "scores": "0-0",
         "google_spreadsheet_path": "",
-        "label_to_invest": [
-          "2w"
-        ],
+        "label_to_invest": ["2w"],
         "info_only_enabled": true,
         "camera_defaults_path": "",
         "default_classes_map": ""
@@ -87,21 +60,7 @@
       "working_point_field_value": 0,
       "height_bins_enabled": true,
       "height_bins": [
-        11,
-        14,
-        18,
-        22,
-        27,
-        30,
-        34,
-        39,
-        46,
-        55,
-        68,
-        91,
-        137,
-        273,
-        1920
+        11, 14, 18, 22, 27, 30, 34, 39, 46, 55, 68, 91, 137, 273, 1920
       ],
       "draw_images_enabled": false,
       "distances_tool_enabled": false,
@@ -109,9 +68,7 @@
       "distances_tool_arguments": {
         "scores": "0-0",
         "google_spreadsheet_path": "",
-        "label_to_invest": [
-          "4w"
-        ],
+        "label_to_invest": ["4w"],
         "info_only_enabled": true,
         "camera_defaults_path": "",
         "default_classes_map": ""
