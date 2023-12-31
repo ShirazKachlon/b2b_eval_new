@@ -1,7 +1,5 @@
-import pandas as pd
-import cv2
-import os
 import logging
+
 logger = logging.getLogger('evaluation')
 
 def validate_bbox(left, top, width, height, image_width, image_height) -> bool:

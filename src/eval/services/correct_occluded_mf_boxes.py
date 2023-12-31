@@ -65,6 +65,6 @@ def change_mf_boxes_to_sf_boxes(mf_df, sf_df):
 
 
 if __name__ == "__main__":
-    mf_path = '/home/omer/mnt/server1/workspace/Omer/truncation/65013e677edfb609dc1b3e31/prod_det_mf.tsv'
-    sf_path = '/home/omer/mnt/server1/workspace/Omer/truncation/65013e677edfb609dc1b3e31/prod_det_sf.tsv'
+    mf_path = ''
+    sf_path = ''
     change_mf_boxes_to_sf_boxes(mf_path, sf_path)
