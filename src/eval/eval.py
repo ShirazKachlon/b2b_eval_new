@@ -25,9 +25,9 @@ class Evaluation:
     def run_evaluation(self, **kwargs):
         tmp_config_path = self.build_eval_for_running(**kwargs)
         "Eval version 2"
-        run_eval_v2(tmp_config_path)
+        #run_eval_v2(tmp_config_path)
         "Eval version 1"
-        #eval_multi_classes(tmp_config_path)
+        eval_multi_classes(tmp_config_path)
         # TODO: bug fix summary with eval v1
         PostProcess(self.main_output_dir.output_folder(), self.main_output_dir.summary_folder()).run()
 

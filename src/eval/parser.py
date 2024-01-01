@@ -53,7 +53,7 @@ class Parser(object):
             self.gt_path = self.gt_path.replace('.tsv', '_as_gt.tsv')
             self.gt_path = os.path.join(self.dir_for_save, os.path.basename(self.gt_path))
             self.gt_df = self.gt_df[evaluation_gt_columns]
-            self.gt_df = self.update_gt_columns_for_eval_v2(self.gt_df)
+            #self.gt_df = self.update_gt_columns_for_eval_v2(self.gt_df)
         else:
             self.det_path = self.det_path.replace('.tsv', '_parsed.tsv')
             self.det_path = os.path.join(self.dir_for_save, os.path.basename(self.det_path))
@@ -63,7 +63,6 @@ class Parser(object):
     def parse_multi_frame(self):
         if not self.config['is_multi_frame_detection']:
             return
-        # TODO: debug fa increase after mf corrections
         self.det_df = correct_2d_by_3d(self.det_df)
         sf_df = pd.read_csv(self.config['sf_det_path'], sep='\t')
         self.det_df = change_mf_boxes_to_sf_boxes(self.det_df, sf_df)
@@ -80,9 +79,8 @@ class Parser(object):
         self.update_config()
 
     def update_gt_columns_for_eval_v2(self, df):
-        if self.config['eval_version'] == 2:
-            columns = {'is_occluded': 'is_occluded_gt', 'is_truncated':'is_truncated_gt'}
-            df.rename(columns=columns, inplace=True)
+        columns = {'is_occluded': 'is_occluded_gt', 'is_truncated':'is_truncated_gt'}
+        df.rename(columns=columns, inplace=True)
         return df
 
     def save(self):
