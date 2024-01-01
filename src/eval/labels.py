@@ -20,7 +20,7 @@ class _2w_label(object):
                 'bike_without_rider', 'motor_without_rider', 'tricycle', 'kick_scooter', 'baby_carriage']
 
     def al_gt_ignore_classes(self):
-        return ['2w_lanes_ignore']
+        return ['2w_ignore']
 
 
 class _4w_label(object):
@@ -48,7 +48,7 @@ class _4w_label(object):
                 'general_ignore', 'ignore', 'ignore_vehicle', 'misc', 'open_car_door', 'train']
 
     def al_gt_ignore_classes(self):
-        return ['4w_fa_dbox', '4w_no_road_contact', '4w_out_of_distance', '4w_under_score_85', '4w_lanes_ignore']
+        return ['4w_ignore']
 
 
 class ped_label(object):
@@ -81,7 +81,7 @@ class ped_label(object):
                 'RIDER_CIPV', 'BABY_CARRIAGE']
 
     def al_gt_ignore_classes(self):
-        return ['ped_lanes_ignore', 'ped_out_of_distance', 'ped_under_score_85', 'ped_fa_pole', 'ped_in_window']
+        return ['ped_ignore']
 
 
 labels_if_autolabeling_gt = {

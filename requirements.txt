@@ -6,3 +6,4 @@ oauth2client
 plotly
 dask # python -m pip install "dask[distributed]" --upgrade
 pyarrow
+xlsxwriter

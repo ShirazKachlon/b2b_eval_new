@@ -7,12 +7,9 @@ import pandas as pd
 
 from src.eval.consts import evaluation_gt_columns, evaluation_detection_columns
 from src.eval.utils import load_tsv_to_df, save_df_to_tsv
-<<<<<<< HEAD
 from src.eval.filters.lanes.src.filter import apply_lanes_filter
-=======
 from src.eval.services.correct_2d_by_3d import correct_2d_by_3d
 from src.eval.services.correct_occluded_mf_boxes import change_mf_boxes_to_sf_boxes
->>>>>>> 4c3c0c4b2e2114c3c7aeb66f284e1b3875f1f8b4
 
 
 class Parser(object):
@@ -47,14 +44,19 @@ class Parser(object):
 
     def parse(self, config, dir_for_save):
         self.set_config(config, dir_for_save)
-        self.parse_auto_labeling()
+        self._convert_labels_type_to_str()
+        self._parse_auto_labeling()
         self.parse_multi_frame()
-        self.parse_lanes_filter()
+        self._parse_lanes_filter()
         self.save()
 
         return self.config
 
-    def parse_auto_labeling(self):
+    def _convert_labels_type_to_str(self):
+        self.det_df['label'] = self.det_df['label'].astype(str)
+        self.gt_df['label'] = self.gt_df['label'].astype(str)
+
+    def _parse_auto_labeling(self):
         if self.config['is_autolabeling_gt']:
             self.gt_path = self.gt_path.replace('.tsv', '_as_gt.tsv')
             self.gt_path = os.path.join(self.dir_for_save, os.path.basename(self.gt_path))
@@ -82,10 +84,10 @@ class Parser(object):
         sf_df = pd.read_csv(self.config['sf_det_path'], sep='\t')
         self.det_df = change_mf_boxes_to_sf_boxes(self.det_df, sf_df)
         self.det_path = self.det_path.replace('.tsv', '_parsed.tsv')
-        self.det_path = os.path.join(self.dir_for_save,os.path.basename(self.det_path))
+        self.det_path = os.path.join(self.dir_for_save, os.path.basename(self.det_path))
         self.update_config()
 
-    def parse_lanes_filter(self):
+    def _parse_lanes_filter(self):
 
         cametra_dir = self.config['cametra_path']
 
@@ -108,9 +110,9 @@ class Parser(object):
         # self.update_config()
 
     def update_gt_columns_for_eval_v2(self, df):
-        if self.config['eval_version'] == 2:
-            columns = {'is_occluded': 'is_occluded_gt', 'is_truncated':'is_truncated_gt'}
-            df.rename(columns=columns, inplace=True)
+        # if self.config['eval_version'] == 2:
+        columns = {'is_occluded': 'is_occluded_gt', 'is_truncated': 'is_truncated_gt'}
+        df.rename(columns=columns, inplace=True)
         return df
 
     def save(self):
