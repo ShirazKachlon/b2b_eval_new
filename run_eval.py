@@ -40,7 +40,7 @@ def entry_point():
     parser = get_parser()
     args = parser.parse_args()
     args = vars(args)
-    cur_eval = Evaluation(config_path=args.get('config_json_path'))
+    cur_eval = Evaluation(config_path=args.get('config_json_path'), eval_version=args.get('eval_version'))
     cur_eval.run_evaluation(**args)
 
 
