@@ -61,12 +61,14 @@ class PostProcess:
         return cur_df
 
     def merge_results(self):
+        sub_dfs = []
         for file in self.final_results:
             if self.eval_version == 2:
                 cur_df = self.prepare_df_eval_v2(file)
             else:
                 cur_df = self.prepare_df_eval_v1(file)
-            self.df_summary_table = self.df_summary_table.append(cur_df)
+            sub_dfs.append(cur_df)
+        self.df_summary_table = pd.concat(sub_dfs)
         return self.df_summary_table
 
     def refactoring_table(self):
