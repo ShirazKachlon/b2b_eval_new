@@ -1,7 +1,7 @@
 from pathlib import Path
 
 evaluation_gt_columns = ['name', 'x_center', 'y_center', 'width', 'height', 'label', 'd3_separation', 'r_label',
-                         'l_label','is_occluded', 'is_truncated']
+                         'l_label', 'is_occluded', 'is_truncated']
 evaluation_detection_columns = evaluation_gt_columns.copy()
 evaluation_detection_columns.append('score')
 
@@ -44,3 +44,11 @@ bins_to_range = {
     '14-18': '150-200',
     '11-14': '200-250'
 }
+
+cols_summary_table_eval_v1 = ['class', 'height(pixels)', 'ranges(m)', 'samples', 'precision_loose',
+                              'precision_strict', 'recall', 'fppi', 'fa',
+                              'fa_localization', 'fa_random', 'tp', 'avg_iou']
+
+cols_summary_table_eval_v2 = ['class', 'height(pixels)', 'ranges(m)', 'samples', 'recall', 'precision',
+                              'fppi', 'fa',
+                              'fa_localization', 'fa_random', 'tp']
