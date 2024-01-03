@@ -10,10 +10,11 @@ def get_parser():
     # Parser for passing only config json file path
     file_parser = subparsers.add_parser('config_file')
     file_parser.add_argument('--config_json_path', type=str, required=True, help='Path to JSON configuration file')
+    file_parser.add_argument('--eval_version', type=int, required=False, default=1, help='evaluation version')
 
     # Parser for using template json by adding manually inputs
     manual_parser = subparsers.add_parser('inputs')
-    manual_parser.add_argument('--eval_version', type=int, required=False, default=2, help='evaluation version')
+    manual_parser.add_argument('--eval_version', type=int, required=False, default=1, help='evaluation version')
     manual_parser.add_argument('--output_dir', type=str, required=True, help='evaluation output directory')
     manual_parser.add_argument('--ground_truth_path', type=str, help='Path to ground truth file')
     manual_parser.add_argument('--det_path', type=str, help='Path to detection file')
@@ -29,8 +30,8 @@ def get_parser():
                                help='flag to filter objects according to lanes road boundary estimation')
     manual_parser.add_argument('--cametra_path', type=str, required=False, help='Path to cametra detection file')
     manual_parser.add_argument('--imu_path', type=str, required=False, help='Path to IMU file')
-    manual_parser.add_argument('--sf_det_path', type=str, required=False,default='',
-                        help='SF detection path for correction of occluded MF objects')
+    manual_parser.add_argument('--sf_det_path', type=str, required=False, default='',
+                               help='SF detection path for correction of occluded MF objects')
 
     return parser
 

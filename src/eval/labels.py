@@ -1,9 +1,6 @@
 class _2w_label(object):
-    def prod_det_classes(self):
-        return ['1']
-
-    def al_det_classes(self):
-        return ['2w']
+    def det_classes(self):
+        return ['2w', '1']
 
     def manual_gt_classes(self):
         return ['BIKE', 'MOTOR', 'BIKE_CIPV', 'MOTOR_CIPV', 'MOTOR_NLV', 'BIKE_NLV', 'bike', 'motor', 'bike_cipv',
@@ -24,11 +21,8 @@ class _2w_label(object):
 
 
 class _4w_label(object):
-    def prod_det_classes(self):
-        return ['2', '2001', '2003', '2004']
-
-    def al_det_classes(self):
-        return ['4w']
+    def det_classes(self):
+        return ['4w', '2', '2001', '2003', '2004']
 
     def manual_gt_classes(self):
         return ['BUS', 'BUS_CIPV', 'BUS_NLV', 'CAR', 'CAR_CIPV', 'CAR_NLV', 'PICK_UP_CAR', 'PICK_UP_CAR_CIPV',
@@ -52,11 +46,8 @@ class _4w_label(object):
 
 
 class ped_label(object):
-    def prod_det_classes(self):
-        return ['0']
-
-    def al_det_classes(self):
-        return ['ped']
+    def det_classes(self):
+        return ['ped', '0']
 
     def manual_gt_classes(self):
         return ['PEDESTRIAN', 'pedestrian', 'pedestrian_cipv', 'pedestrian_nlv', 'pedestrian_with_wheelchair',
@@ -86,17 +77,17 @@ class ped_label(object):
 
 labels_if_autolabeling_gt = {
     '2w': {
-        'det_classes': _2w_label().prod_det_classes(),
+        'det_classes': _2w_label().det_classes(),
         'gt_classes': _2w_label().al_gt_classes(),
         'gt_ignore_classes': _2w_label().al_gt_ignore_classes(),
     },
     '4w': {
-        'det_classes': _4w_label().prod_det_classes(),
+        'det_classes': _4w_label().det_classes(),
         'gt_classes': _4w_label().al_gt_classes(),
         'gt_ignore_classes': _4w_label().al_gt_ignore_classes(),
     },
     'peds': {
-        'det_classes': ped_label().prod_det_classes(),
+        'det_classes': ped_label().det_classes(),
         'gt_classes': ped_label().al_gt_classes(),
         'gt_ignore_classes': ped_label().al_gt_ignore_classes(),
     }
@@ -104,17 +95,17 @@ labels_if_autolabeling_gt = {
 
 labels_if_autolabeling_det = {
     '2w': {
-        'det_classes': _2w_label().al_det_classes(),
+        'det_classes': _2w_label().det_classes(),
         'gt_classes': _2w_label().manual_gt_classes(),
         'gt_ignore_classes': _2w_label().manual_gt_ignore_classes(),
     },
     '4w': {
-        'det_classes': _4w_label().al_det_classes(),
+        'det_classes': _4w_label().det_classes(),
         'gt_classes': _4w_label().manual_gt_classes(),
         'gt_ignore_classes': _4w_label().manual_gt_ignore_classes(),
     },
     'peds': {
-        'det_classes': ped_label().al_det_classes(),
+        'det_classes': ped_label().det_classes(),
         'gt_classes': ped_label().manual_gt_classes(),
         'gt_ignore_classes': ped_label().manual_gt_ignore_classes(),
     }
