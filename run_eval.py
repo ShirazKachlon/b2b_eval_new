@@ -11,10 +11,11 @@ def get_parser():
     # Parser for passing only config json file path
     file_parser = subparsers.add_parser('config_file')
     file_parser.add_argument('--config_json_path', type=str, required=True, help='Path to JSON configuration file')
+    file_parser.add_argument('--eval_version', type=int, required=False, default=1, help='evaluation version')
 
     # Parser for using template json by adding manually inputs
     manual_parser = subparsers.add_parser('inputs')
-    manual_parser.add_argument('--eval_version', type=int, required=False, default=2, help='evaluation version')
+    manual_parser.add_argument('--eval_version', type=int, required=False, default=1, help='evaluation version')
     manual_parser.add_argument('--output_dir', type=str, required=True, help='evaluation output directory')
     manual_parser.add_argument('--ground_truth_path', type=str, help='Path to ground truth file')
     manual_parser.add_argument('--det_path', type=str, help='Path to detection file')
@@ -48,7 +49,7 @@ def entry_point():
         print(f"Overriding old results in {args['output_dir']}")
         shutil.rmtree(args['output_dir'])
 
-    cur_eval = Evaluation(config_path=args.get('config_json_path'))
+    cur_eval = Evaluation(config_path=args.get('config_json_path'), eval_version=args.get('eval_version'))
     cur_eval.run_evaluation(**args)
 
 

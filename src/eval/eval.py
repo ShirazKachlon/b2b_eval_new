@@ -15,8 +15,9 @@ from src.eval.utils import load_json, dump_json, validate_input, validate_path_i
 
 
 class Evaluation:
-    def __init__(self, config_path=None):
+    def __init__(self, config_path=None, eval_version=None):
         self.config_path = config_path
+        self.eval_version = eval_version
         self.cur_tmp_folder_path = tmp_folder_path
         self.list_of_summarize_dict = None
         self.main_output_dir = None
@@ -24,11 +25,15 @@ class Evaluation:
 
     def run_evaluation(self, **kwargs):
         tmp_config_path = self.build_eval_for_running(**kwargs)
-        # run_eval_v2(tmp_config_path)
-        # "Eval version 1"
-        eval_multi_classes(tmp_config_path)
-        # TODO: bug fix summary with eval v1
-        # PostProcess(self.main_output_dir.output_folder(), self.main_output_dir.summary_folder()).run()
+        if self.eval_version == 1:
+            "Eval version 1"
+            eval_multi_classes(tmp_config_path)
+        else:
+            "Eval version 2"
+            run_eval_v2(tmp_config_path)
+
+        PostProcess(self.eval_version, self.main_output_dir.output_folder(),
+                    self.main_output_dir.summary_folder()).run()
 
     def build_eval_for_running(self, **kwargs):
         update_needed = False
