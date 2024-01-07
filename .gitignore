@@ -4,3 +4,10 @@
 __pycache__/
 tests/
 inputs/
+
+*.pyc
+./__pycache__/*
+.ipynb
+.vscode/*
+
+tmp

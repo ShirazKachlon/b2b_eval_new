@@ -2,7 +2,7 @@
   "version": 3.41,
   "data_config": {
     "det_classes": [
-      "4w"
+      "4w",2,"2"
     ],
     "gt_classes": [
       "BUS",
@@ -54,7 +54,8 @@
       "van_nlv",
       "dummy_car",
       "rv",
-      "mini_truck"
+      "mini_truck",
+      "4w"
     ],
     "gt_classes_ignore": [
       "DONTCARE",
@@ -70,13 +71,14 @@
       "ignore_vehicle",
       "misc",
       "open_car_door",
-      "train"
+      "train",
+      "4w_ignore"
     ],
     "convert_3d_bboxes_to_2d": false,
     "gt_occlusion_states_to_ignore": [
       1
     ],
-    "gt_truncation_states_to_ignore": [],
+    "gt_truncation_states_to_ignore": [1],
     "det_min_score_threshold": 0,
     "roi_dims_list": [
       {

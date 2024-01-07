@@ -79,14 +79,14 @@ class PostProcess:
         self.df_summary_table = self.df_summary_table.drop(
             self.df_summary_table[(self.df_summary_table['min_height']) == (self.df_summary_table['max_height'])].index)
         self.df_summary_table['height(pixels)'] = (
-                self.df_summary_table['min_height'].astype(int).astype(str) + "-" +
-                self.df_summary_table['max_height'].astype(int).astype(str)
+            self.df_summary_table['min_height'].astype(int).astype(str) + "-" +
+            self.df_summary_table['max_height'].astype(int).astype(str)
         )
         self.df_summary_table['ranges(m)'] = self.df_summary_table['height(pixels)'].apply(
             lambda x: bins_to_range.get(x, 'Unknown'))
         if self.eval_version == 2:
             self.df_summary_table['precision'] = (self.df_summary_table['tp'] / (
-                    self.df_summary_table['tp'] + self.df_summary_table['fa'])) * 100
+                self.df_summary_table['tp'] + self.df_summary_table['fa'])) * 100
         self.df_summary_table = self.df_summary_table[cols_summary_table_eval_v1 if self.eval_version == 1 else
-        cols_summary_table_eval_v2]
+                                                      cols_summary_table_eval_v2]
         return self.df_summary_table

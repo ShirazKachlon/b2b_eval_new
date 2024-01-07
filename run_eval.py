@@ -1,4 +1,5 @@
 import argparse
+import os
 
 from src.eval.eval import Evaluation
 
@@ -30,6 +31,8 @@ def get_parser():
                                help='flag to filter objects according to lanes road boundary estimation')
     manual_parser.add_argument('--cametra_path', type=str, required=False, help='Path to cametra detection file')
     manual_parser.add_argument('--imu_path', type=str, required=False, help='Path to IMU file')
+    manual_parser.add_argument('--override', default=False, action='store_true',
+                               help='whether to overrider old results if exists')
     manual_parser.add_argument('--sf_det_path', type=str, required=False, default='',
                                help='SF detection path for correction of occluded MF objects')
 
@@ -40,6 +43,12 @@ def entry_point():
     parser = get_parser()
     args = parser.parse_args()
     args = vars(args)
+
+    if args['override'] and os.path.exists(args['output_dir']):
+        import shutil
+        print(f"Overriding old results in {args['output_dir']}")
+        shutil.rmtree(args['output_dir'])
+
     cur_eval = Evaluation(config_path=args.get('config_json_path'), eval_version=args.get('eval_version'))
     cur_eval.run_evaluation(**args)
 
